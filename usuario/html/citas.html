@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mis Citas - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+  <!-- ENCABEZADO -->
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+      <div class="encabezado-derecho">
+        <button onclick="window.location.href='./inicio.html'">INICIO</button>
+        <button onclick="window.location.href='./citas.html'">MIS CITAS</button>
+        <button onclick="window.location.href='./historial.html'">MI HISTORIAL</button>
+        <button onclick="window.location.href='./cuenta.html'">MI CUENTA</button>
+        <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg'); background-size: cover; min-height: 100vh; padding: 20px; display: flex; justify-content: center;">
+    <div class="calendario-container">
+
+      <!-- Botón cerrar calendario -->
+      <button id="cerrarCalendario" class="btn-cerrar-simple">✖</button>
+
+      <!-- Título -->
+      <h2 class="calendario-titulo" style="color: #8B0000;">CALENDARIO DE CITAS</h2>
+
+      <!-- Filtros mes y año -->
+      <div class="filtros-calendario">
+        <select id="selectMes" class="select-filtro"></select>
+        <select id="selectAnio" class="select-filtro"></select>
+      </div>
+
+      <!-- Calendario -->
+      <table class="tabla-profesional">
+        <thead>
+          <tr class="calendario-cabecera">
+            <th>DOMINGO</th>
+            <th>LUNES</th>
+            <th>MARTES</th>
+            <th>MIÉRCOLES</th>
+            <th>JUEVES</th>
+            <th>VIERNES</th>
+            <th>SÁBADO</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoCalendario">
+          <!-- Días generados por JavaScript -->
+        </tbody>
+      </table>
+
+      <!-- Leyenda -->
+      <div class="leyenda-calendario">
+        <span><span class="estado-verde leyenda-cuadro"></span> Atendida</span>
+        <span><span class="estado-rojo leyenda-cuadro"></span> Anulada</span>
+        <span><span class="estado-naranja leyenda-cuadro"></span> Pendiente</span>
+        <span><span class="estado-azul leyenda-cuadro"></span> Reprogramada</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- WhatsApp Fijo -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51998172864" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <footer>
+    <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+  </footer>
+
+  <script type="module" src="../js/citas.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ver Historial de Citas - Administrador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+  <!-- ENCABEZADO -->
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+      <div class="encabezado-derecho">
+        <button onclick="window.location.href='./VerInicio.html'">INICIO</button>
+        <button onclick="window.location.href='./VerCitas.html'">VER CITAS</button>
+        <button onclick="window.location.href='./VerUsuario.html'">VER USUARIOS</button>
+        <button onclick="window.location.href='./VerCuenta.html'">MI CUENTA</button>
+        <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg'); padding: 30px;">
+    <section style="width: 100%; max-width: 1200px; margin: auto; overflow-x: auto; background: rgba(255,255,255,0.95); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <div style="max-width: 100%; max-height: 600px; overflow-x: auto; overflow-y: auto; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px;">
+        <table class="tabla-profesional" id="tablaHistorial" style="min-width: 1000px; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <!-- Título que ocupa 10 columnas -->
+              <td colspan="10" style="text-align: center; font-weight: bold; font-size: 1.5rem; color: #8B0000; padding: 15px 0; vertical-align: middle;">
+                HISTORIAL DE RESERVAS - ADMINISTRADOR
+              </td>
+              <!-- Celda para el botón X -->
+              <td style="text-align: right; vertical-align: middle; padding-right: 5px;">
+                 <button id="btnCerrarHistorial" class="btn-cerrar-simple" aria-label="Cerrar historial">✖</button>
+              </td>
+            </tr>
+            <tr>
+              <th>N° Reserva</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Cliente</th>
+              <th>Nombre Transportista</th>
+              <th>DNI Transportista</th>
+              <th>Celular</th>
+              <th>Placa</th>
+              <th>Operador</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Datos serán insertados dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal del formulario RESERVAR CITA (oculto por defecto) -->
+  <div id="modalEditar" class="modal oculto" style="position: fixed; top:0; left:0; width:100%; height:100%; 
+       background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+    <div class="modal-contenido" style="background: white; border-radius: 10px; padding: 30px; width: 600px; max-width: 95%; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <button id="cerrarModalEditar" class="btn-cerrar-simple" style="position: absolute; top: 15px; right: 15px;">✖</button>
+      <h3 style="text-align: center; margin-bottom: 20px; color: #8B0000;">EDITAR RESERVA DE CITA</h3>
+      <form id="formEditarReserva">
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DE LA CITA</h4>
+        <label>Planta:</label>
+        <input type="text" value="SIKA MBCC PERU" disabled />
+
+        <label for="editMotivo">Motivo:</label>
+        <select id="editMotivo" name="editMotivo" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="cargar">Cargar</option>
+          <option value="descargar">Descargar</option>
+        </select>
+
+        <label for="editFecha">Fecha:</label>
+        <input type="date" id="editFecha" name="editFecha" required />
+
+        <label for="editHora">Hora:</label>
+        <select id="editHora" name="editHora" required>
+          <option value="">-- Seleccionar --</option>
+        </select>
+
+        <label for="editCliente">Cliente:</label>
+        <input type="text" id="editCliente" name="editCliente" required />
+
+        <label for="editAyudante">¿Tienes ayudante?</label>
+        <select id="editAyudante" name="editAyudante" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
+
+        <div id="editDatosAyudante" class="oculto">
+          <label for="editNombreAyudante">Nombre ayudante:</label>
+          <input type="text" id="editNombreAyudante" name="editNombreAyudante" />
+          <label for="editDniAyudante">DNI ayudante:</label>
+          <input type="text" id="editDniAyudante" name="editDniAyudante" />
+        </div>
+
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTISTA</h4>
+
+        <label for="editNombreTransportista">Nombre Transportista:</label>
+        <input type="text" id="editNombreTransportista" name="editNombreTransportista" required />
+
+        <label for="editDniTransportista">DNI Transportista:</label>
+        <input type="text" id="editDniTransportista" name="editDniTransportista" required />
+
+        <label for="editCelular">Celular:</label>
+        <input type="tel" id="editCelular" name="editCelular" required />
+
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTE</h4>
+
+        <label for="editOperador">Operador:</label>
+        <input type="text" id="editOperador" name="editOperador" required />
+
+        <label for="editPlaca">Placa:</label>
+        <input type="text" id="editPlaca" name="editPlaca" required />
+
+        <label for="editEstadoCarga">Estado de Carga:</label>
+        <select id="editEstadoCarga" name="editEstadoCarga" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="con carga">Con carga</option>
+          <option value="sin carga">Sin carga</option>
+        </select>
+
+        <div id="editDescripcionCargaContainer" class="oculto">
+          <label for="editDescripcionCarga">Descripción de la carga:</label>
+          <textarea id="editDescripcionCarga" name="editDescripcionCarga"></textarea>
+        </div>
+
+        <label for="editEstado">Estado:</label>
+        <select id="editEstado" name="editEstado" required>
+          <option value="pendiente">Pendiente</option>
+          <option value="atendida">Atendida</option>
+          <option value="anulado">Anulado</option>
+          <option value="reprogramado">Reprogramado</option>
+        </select>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="submit" class="btn-login">GUARDAR CAMBIOS</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+  </footer>
+
+  <!-- WhatsApp -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51987654321" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <script type="module" src="../js/VerHistorial.js"></script>
+</body>
+</html>

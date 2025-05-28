@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iniciar Sesión Administrador - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO FORMULARIO ADMIN -->
+  <main class="login-main" style="background-image: url('../../imagenes/imagen3.jpg');">
+    <section class="login-formulario">
+      <h2>Inicia Sesión Administrador</h2>
+      <form id="formAdminLogin">
+        <label for="adminEmail">Correo Electrónico:</label>
+        <input type="email" id="adminEmail" required />
+
+        <label for="adminPass">Contraseña:</label>
+        <input type="password" id="adminPass" required />
+
+        <button type="submit" class="btn-login">Ingresar</button>
+        <div class="login-opciones"></div>
+        <button type="button" class="btn-secundario" onclick="window.location.href='../../login/login.html'">Regresar</button>
+        </div>
+
+      </form>
+    </section>
+  </main>
+
+  <!-- WhatsApp Fijo -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51998172864" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

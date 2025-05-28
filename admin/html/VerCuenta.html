@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>MI CUENTA - ADMINISTRADOR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+      <div class="encabezado-derecho">
+        <button onclick="window.location.href='./VerInicio.html'">INICIO</button>
+        <button onclick="window.location.href='./VerCitas.html'">VER CITAS</button>
+        <button onclick="window.location.href='./VerCuenta.html'">MI CUENTA</button>
+        <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg');">
+    <div class="login-formulario" id="formCuentaContainer" style="position: relative; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      
+      <!-- Botón para cerrar el formulario -->
+      <button id="btnCerrarCuenta" class="btn-cerrar-simple" style="position: absolute; top: 15px; right: 15px; font-size: 20px; background: none; border: none; cursor: pointer;">✖</button>
+      
+      <h2 style="color: darkred; text-transform: uppercase;">MI CUENTA</h2>
+      <form id="formCuenta">
+        <label for="ruc"><strong>RUC:</strong></label>
+        <input type="text" id="ruc" disabled />
+
+        <label for="razon"><strong>Razón social:</strong></label>
+        <input type="text" id="razon" disabled />
+
+        <label for="email"><strong>Correo electrónico:</strong></label>
+        <input type="email" id="email" disabled />
+
+        <label for="celular"><strong>Celular:</strong></label>
+        <input type="tel" id="celular" disabled />
+
+        <div style="margin-top: 20px;">
+          <button type="button" class="btn-login" id="btnEditar">EDITAR DATOS</button>
+          <button type="button" class="btn-login" id="btnCambiarPass">CAMBIAR CONTRASEÑA</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+  </footer>
+
+  <!-- WhatsApp Soporte -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51987654321" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <!-- MODAL CAMBIO DE CONTRASEÑA -->
+  <div id="modalPass" class="modal oculto">
+    <div class="modal-contenido">
+      <button class="cerrar-modal" id="cerrarModalPass">X</button>
+      <h3>Cambiar contraseña</h3>
+      <form id="formPass">
+        <label>Nueva contraseña:</label>
+        <input type="password" id="newPass" required />
+
+        <label>Repetir nueva contraseña:</label>
+        <input type="password" id="repeatPass" required />
+
+        <button type="submit" class="btn-login">ACTUALIZAR</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module" src="../js/VerCuenta.js"></script>
+</body>
+</html>
