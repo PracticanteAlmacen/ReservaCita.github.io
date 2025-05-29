@@ -1,0 +1,163 @@
+<!-- admin/html/VerUsuario.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ver Usuarios - Administrador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <style>
+      /* Loader Styles */
+      .loader-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: rgba(255,255,255,0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #8B0000;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contenido oculto inicialmente -->
+  <div id="contenidoPagina" style="display:none;">
+  <!-- ENCABEZADO -->
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+      <div class="encabezado-derecho">
+        <button onclick="window.location.href='./VerInicio.html'">INICIO</button>
+        <button onclick="window.location.href='./VerCitas.html'">VER CITAS</button>
+        <button onclick="window.location.href='./VerUsuario.html'">VER USUARIOS</button>
+        <button onclick="window.location.href='./VerCuenta.html'">MI CUENTA</button>
+        <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+<!-- CUERPO -->
+<main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg'); padding: 30px;">
+  <section style="width: 100%; max-width: 1200px; margin: auto; overflow: hidden;">
+    <div style="max-height: 600px; overflow-y: auto; overflow-x: auto; background: rgba(255,255,255,0.95); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); padding: 10px;">
+      <table class="tabla-profesional" id="tablaUsuarios" style="min-width: 1000px; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <!-- Título de la tabla, ocupa 5 columnas -->
+            <td colspan="5" style="text-align: center; font-weight: bold; font-size: 1.5rem; color: darkred; padding: 15px 0;">
+              LISTA DE USUARIOS
+            </td>
+            <!-- Celda para el botón X -->
+            <td style="text-align: right; vertical-align: middle; padding-right: 10px;">
+              <button id="btnCerrarUsuarios" class="btn-cerrar-simple" aria-label="Cerrar lista de usuarios">✖</button>
+            </td>
+          </tr>
+          <!-- Fila de las columnas de la tabla -->
+          <tr>
+            <th>Nº USUARIO</th>
+            <th>CELULAR</th>
+            <th>CORREO ELECTRÓNICO</th>
+            <th>ROL</th>
+            <th>RAZÓN SOCIAL</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Datos dinámicos -->
+        </tbody>
+      </table>
+      <!-- Botón Exportar Excel -->
+      <div style="text-align: center; margin-top: 25px; margin-bottom: 15px;">
+        <button id="btnExportarExcelUsuarios"
+          style="background-color: #8B0000; color: white; font-weight: bold; font-size: 1rem; padding: 12px 24px;
+                  border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: background 0.3s;">
+          EXPORTAR ARCHIVO EXCEL
+        </button>
+      </div>  
+    </div>
+  </section>
+</main>
+
+
+  <!-- Modal editar usuario -->
+  <div id="modalEditarUsuario" class="modal oculto" aria-hidden="true">
+    <div class="modal-contenido" role="dialog" aria-modal="true" aria-labelledby="tituloModalEditar">
+      <button id="cerrarModalEditarUsuario" class="btn-cerrar-simple" aria-label="Cerrar formulario">✖</button>
+      <h3 id="tituloModalEditar" style="color: #8B0000; text-align:center;">EDITAR USUARIO</h3>
+      <form id="formEditarUsuario" class="formulario-editar">
+        <label for="editRuc">RUC:</label>
+        <input type="text" id="editRuc" name="editRuc" required />
+
+        <label for="editRazonSocial">Razón social:</label>
+        <input type="text" id="editRazonSocial" name="editRazonSocial" required />
+
+        <label for="editRol">Rol:</label>
+        <select id="editRol" name="editRol" required>
+          <option value="true">Administrador</option>
+          <option value="false">Usuario</option>
+        </select>
+
+        <label for="editEmail">Correo electrónico:</label>
+        <input type="email" id="editEmail" name="editEmail" disabled />
+
+        <label for="editCelular">Celular:</label>
+        <input type="tel" id="editCelular" name="editCelular" required />
+
+        <div style="text-align:center; margin-top: 20px;">
+          <button type="submit" class="btn-login">GUARDAR CAMBIOS</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- WhatsApp -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51987654321" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+  </footer>
+
+
+  <script type="module" src="../js/VerUsuario.js"></script>
+
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("contenidoPagina").style.display = "block";
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

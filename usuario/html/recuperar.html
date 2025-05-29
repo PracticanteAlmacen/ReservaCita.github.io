@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recuperar Contraseña - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    /* Loader Styles */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #8B0000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contenido oculto al inicio -->
+  <div id="contenidoPagina" style="display:none;">
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <div class="encabezado-contenido">
+        <div class="encabezado-izquierdo">
+          <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+          <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- CUERPO -->
+    <main class="login-main" style="background-image: url('../../imagenes/imagen3.jpg');">
+      <section class="login-formulario">
+        <h2>RECUPERAR CONTRASEÑA</h2>
+        <form id="formRecuperar">
+          <label for="recEmail">Correo registrado:</label>
+          <input type="email" id="recEmail" required style="margin-bottom: 10px;" />
+
+          <!-- Mensajes -->
+          <div id="mensajeError" style="color: red; font-weight: bold; text-align: center; display: none; margin-top: 4px;"></div>
+          <div id="mensajeExito" style="color: green; font-weight: bold; text-align: center; display: none; margin-top: 4px;"></div>
+
+          <!-- Botón ENVIAR justo debajo del input -->
+          <button type="button" id="enviarEnlace" class="btn-login" style="margin-top: 6px;">ENVIAR ENLACE</button>
+
+          <div style="text-align: center; margin-top: 10px;">
+            <button type="button" onclick="window.location.href='../../login/login.html'" class="btn-secundario">Volver al Login</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- WhatsApp Fijo -->
+    <div class="whatsapp-logo-fixed">
+      <a href="https://wa.me/51998172864" target="_blank">
+        <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+      </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+    </footer>
+  </div>
+
+  <script type="module" src="../js/recuperar.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('contenidoPagina').style.display = 'block';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

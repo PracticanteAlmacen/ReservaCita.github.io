@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* Loader Styles */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #8B0000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- ENCABEZADO -->
+  <div id="contenidoPagina" style="display:none;"></div>
+  <header class="encabezado">
+    <div class="encabezado-contenido">  
+      <div class="encabezado-izquierdo">
+        <img src="../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="login-main" style="background-image: url('../imagenes/imagen3.jpg');">
+    <!-- Formulario Login Usuario -->
+    <section id="formularioUsuario" class="login-formulario">
+      <h2>INICIAR SESIÓN USUARIO</h2>
+      <form id="loginForm">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" required style="margin-bottom: 10px;" />
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" required style="margin-bottom: 10px;" />
+
+        <p class="msgError" style="color: red; font-weight: bold; text-align: center; display: none; margin-top: 4px;"></p>
+
+        <button type="submit" class="btn-login" style="margin-top: 1px;">INGRESAR</button>
+       
+      </form>
+
+      <div class="login-opciones" style="text-align: center; margin-top: 10px;">
+        <a href="../usuario/html/recuperar.html" class="btn-secundario">¿Olvidaste tu contraseña? Recuperala</a>
+        <a href="../usuario/html/registro.html" class="btn-secundario">¿Aún no tienes cuenta? Regístrate</a>
+        <a href="../admin/html/admin.html" class="btn-secundario">¿Eres Administrador? Ingresa aquí</a>
+      </div>
+
+    </section>
+
+    <!-- Formulario Login Administrador -->
+    <section id="formularioAdmin" class="login-formulario oculto">
+      <h2>INICIAR SESIÓN ADMINISTRADOR</h2>
+      <form id="adminLoginForm">
+        <label for="adminEmail">Correo electrónico:</label>
+        <input type="email" id="adminEmail" required style="margin-bottom: 10px;" />
+
+        <label for="adminPassword">Contraseña:</label>
+        <input type="password" id="adminPassword" required style="margin-bottom: 10px;" />
+
+        <p class="msgError" style="color: red; font-weight: bold; text-align: center; display: none; margin-top: 4px;"></p>
+
+        <button type="submit" class="btn-login" style="margin-top: 1px;">INGRESAR</button>
+      </form>
+  
+      <div class="login-opciones">
+        <button class="btn-secundario" id="btnVolverUsuario">Regresar</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- WhatsApp Fijo -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51998172864" target="_blank">
+      <img src="../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <!-- SCRIPT DE CONTROL SE CARGARÁ DESDE login.js -->
+  <script type="module" src="./login.js"></script>
+
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("contenidoPagina").style.display = "block";
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>

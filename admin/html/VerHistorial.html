@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ver Historial de Citas - Administrador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <style>
+      /* Loader Styles */
+      .loader-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: rgba(255,255,255,0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #8B0000;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+  
+  <!-- ENCABEZADO -->
+  <div id="contenidoPagina" style="display:none;"></div>
+  <header class="encabezado">
+    <div class="encabezado-contenido">
+      <div class="encabezado-izquierdo">
+        <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+        <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+      </div>
+      <div class="encabezado-derecho">
+        <button onclick="window.location.href='./VerInicio.html'">INICIO</button>
+        <button onclick="window.location.href='./VerCitas.html'">VER CITAS</button>
+        <button onclick="window.location.href='./VerUsuario.html'">VER USUARIOS</button>
+        <button onclick="window.location.href='./VerCuenta.html'">MI CUENTA</button>
+        <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg'); padding: 30px;">
+    <section style="width: 100%; max-width: 1200px; margin: auto; overflow-x: auto; background: rgba(255,255,255,0.95); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <div style="max-width: 100%; max-height: 600px; overflow-x: auto; overflow-y: auto; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px;">
+        <table class="tabla-profesional" id="tablaHistorial" style="min-width: 1000px; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <!-- Título que ocupa 10 columnas -->
+              <td colspan="10" style="text-align: center; font-weight: bold; font-size: 1.5rem; color: #8B0000; padding: 15px 0; vertical-align: middle;">
+                HISTORIAL DE RESERVAS - ADMINISTRADOR
+              </td>
+              <!-- Celda para el botón X -->
+              <td style="text-align: right; vertical-align: middle; padding-right: 5px;">
+                 <button id="btnCerrarHistorial" class="btn-cerrar-simple" aria-label="Cerrar historial">✖</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Nº RESERVA</th>
+              <th>FECHA</th>
+              <th>HORA</th>
+              <th>CLIENTE</th>
+              <th>NOMBRE TRANSPORTISTA</th>
+              <th>DNI TRANSPORTISTA</th>
+              <th>CELULAR</th>
+              <th>PLACA</th>
+              <th>OPERADOR</th>
+              <th>ESTADO</th>
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Datos serán insertados dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+       <!-- Botón Exportar Excel -->
+      <div style="text-align: center; margin-top: 25px; margin-bottom: 10px;">
+        <button id="btnExportarExcel"
+          style="background-color: #8B0000; color: white; font-weight: bold; font-size: 1rem; padding: 12px 24px;
+                 border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: background 0.3s;">
+           EXPORTAR ARCHIVO EXCEL
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal del formulario EDITAR RESERVA (oculto por defecto) -->
+  <div id="modalEditar" class="modal oculto" style="position: fixed; top:0; left:0; width:100%; height:100%; 
+      background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+    <div class="modal-contenido" style="background: white; border-radius: 10px; padding: 30px; width: 700px; max-width: 95%; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <button id="cerrarModalEditar" class="btn-cerrar-simple" style="position: absolute; top: 15px; right: 15px;">✖</button>
+      <h3 style="text-align: center; margin-bottom: 20px; color: #8B0000;">EDITAR RESERVA DE CITA</h3>
+      <form id="formEditarReserva">
+
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DE LA CITA</h4>
+        <label>Planta:</label>
+        <input type="text" value="SIKA MBCC PERU" disabled />
+
+        <label for="editMotivo">Motivo:</label>
+        <select id="editMotivo" name="editMotivo" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="cargar">Cargar</option>
+          <option value="descargar">Descargar</option>
+        </select>
+
+        <label for="editFecha">Fecha:</label>
+        <input type="date" id="editFecha" name="editFecha" required />
+        <div id="mensajeFechaEditar" style="color: red; font-weight: bold; margin-top: 5px; display:none;"></div>
+
+        <label for="editHora">Hora:</label>
+        <select id="editHora" name="editHora" required>
+          <option value="">-- Seleccionar --</option>
+        </select>
+
+        <label for="editCliente">Cliente:</label>
+        <input type="text" id="editCliente" name="editCliente" required />
+
+        <label for="editAyudante">¿Tienes ayudante?</label>
+        <select id="editAyudante" name="editAyudante" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
+
+        <div id="editDatosAyudante" class="oculto">
+          <label for="editCantidadAyudantes">Cantidad de ayudantes:</label>
+          <input type="number" id="editCantidadAyudantes" name="editCantidadAyudantes" min="1" max="10" />
+          <div id="editAyudantesContainer"></div>
+        </div>
+
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTISTA</h4>
+
+        <label for="editNombreTransportista">Nombre Transportista:</label>
+        <input type="text" id="editNombreTransportista" name="editNombreTransportista" required />
+
+        <label for="editDniTransportista">DNI Transportista:</label>
+        <input type="text" id="editDniTransportista" name="editDniTransportista" required />
+
+        <label for="editCelular">Celular:</label>
+        <input type="tel" id="editCelular" name="editCelular" required />
+
+        <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTE</h4>
+
+        <label for="editOperador">Operador:</label>
+        <input type="text" id="editOperador" name="editOperador" required />
+
+        <label for="editPlaca">Placa:</label>
+        <input type="text" id="editPlaca" name="editPlaca" required />
+
+        <label for="editEstadoCarga">Estado de Carga:</label>
+        <select id="editEstadoCarga" name="editEstadoCarga" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="con carga">Con carga</option>
+          <option value="sin carga">Sin carga</option>
+        </select>
+
+        <div id="editDescripcionCargaContainer" class="oculto">
+          <label for="editDescripcionCarga">Descripción de la carga:</label>
+          <textarea id="editDescripcionCarga" name="editDescripcionCarga"></textarea>
+        </div>
+
+        <label for="editEstado">Estado:</label>
+        <select id="editEstado" name="editEstado" required>
+          <option value="pendiente">Pendiente</option>
+          <option value="atendida">Atendida</option>
+          <option value="anulado">Anulado</option>
+          <option value="reprogramado">Reprogramado</option>
+        </select>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="submit" class="btn-login">GUARDAR CAMBIOS</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- WhatsApp -->
+  <div class="whatsapp-logo-fixed">
+    <a href="https://wa.me/51987654321" target="_blank">
+      <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+    </a>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+  </footer>
+
+
+  <script type="module" src="../js/VerHistorial.js"></script>
+  <script>
+    // Mostrar loader hasta que VerHistorial.js cargue los datos
+    window.addEventListener("load", () => {
+      // Espera 1 segundo para simular carga (puedes ajustar o enlazar con evento real)
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("contenidoPagina").style.display = "block";
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>

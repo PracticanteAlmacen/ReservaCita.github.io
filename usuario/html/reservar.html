@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservar Cita - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    /* Loader Styles */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #8B0000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contenido oculto al inicio -->
+  <div id="contenidoPagina" style="display:none;">
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <div class="encabezado-contenido">
+        <div class="encabezado-izquierdo">
+          <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+          <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+        </div>
+        <div class="encabezado-derecho">
+          <button onclick="window.location.href='./usuario.html'">INICIO</button>
+          <button onclick="window.location.href='./citas.html'">MIS CITAS</button>
+          <button onclick="window.location.href='./historial.html'">MI HISTORIAL</button>
+          <button onclick="window.location.href='./cuenta.html'">MI CUENTA</button>
+          <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CUERPO -->
+    <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg');">
+      <div class="modal-contenido" style="position: relative; max-width: 700px; margin: auto;">
+        <button id="btnCerrarReserva" class="btn-cerrar-simple" style="position: absolute; top: 10px; right: 10px;">✖</button>
+        <h3 style="text-align: center; margin-bottom: 20px; color: #8B0000;">RESERVA DE CITA</h3>
+
+        <form id="formReserva">
+          <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DE LA CITA</h4>
+          <label>Planta:</label>
+          <input type="text" value="SIKA MBCC PERU" disabled />
+
+          <label for="motivo">Motivo:</label>
+          <select id="motivo" name="motivo" required>
+            <option value="">-- Seleccionar --</option>
+            <option value="cargar">Cargar</option>
+            <option value="descargar">Descargar</option>
+          </select>
+
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" required />
+          <div id="mensajeFecha" style="color: red; font-weight: bold; margin-top: 4px; display: none;"></div>
+
+          <label for="hora">Hora:</label>
+          <select id="hora" name="hora" required>
+            <option value="">-- Seleccionar --</option>
+          </select>
+
+          <label for="cliente">Cliente:</label>
+          <input type="text" id="cliente" name="cliente" required />
+
+          <label for="ayudante">¿Tienes ayudante?</label>
+          <select id="ayudante" name="ayudante" required>
+            <option value="">-- Seleccionar --</option>
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+          </select>
+
+          <div id="datosAyudante" class="oculto">
+            <label for="cantidadAyudantes">Cantidad de ayudantes:</label>
+            <input type="number" id="cantidadAyudantes" name="cantidadAyudantes" min="1" max="10" />
+            <div id="ayudantesContainer"></div>
+          </div>
+
+          <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTISTA</h4>
+
+          <label for="nombreTransportista">Nombre Transportista:</label>
+          <input type="text" id="nombreTransportista" name="nombreTransportista" required />
+
+          <label for="dniTransportista">DNI Transportista:</label>
+          <input type="text" id="dniTransportista" name="dniTransportista" required />
+
+          <label for="celular">Celular:</label>
+          <input type="tel" id="celular" name="celular" required />
+
+          <h4 style="margin-bottom: 20px; color: #8B0000;">DATOS DEL TRANSPORTE</h4>
+
+          <label for="operador">Operador:</label>
+          <input type="text" id="operador" name="operador" required />
+
+          <label for="placa">Placa:</label>
+          <input type="text" id="placa" name="placa" required />
+
+          <label for="estadoCarga">Estado de Carga:</label>
+          <select id="estadoCarga" name="estadoCarga" required>
+            <option value="">-- Seleccionar --</option>
+            <option value="con carga">Con carga</option>
+            <option value="sin carga">Sin carga</option>
+          </select>
+
+          <div id="descripcionCargaContainer" class="oculto">
+            <label for="descripcionCarga">Descripción de la Carga:</label>
+            <textarea id="descripcionCarga" name="descripcionCarga"></textarea>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <div id="mensajeReserva" style="margin-bottom: 10px; font-weight: bold;"></div>
+            <button type="submit" class="btn-login">Reservar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+      <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+    </footer>
+
+    <!-- WhatsApp Fijo -->
+    <div class="whatsapp-logo-fixed">
+      <a href="https://wa.me/51998172864" target="_blank">
+        <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+      </a>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module" src="../js/reservar.js"></script>
+  <script>
+    // Mostrar loader y ocultar contenido inicialmente
+    window.addEventListener('load', () => {
+      // Ajusta esta llamada a tu lógica en reservar.js cuando los datos estén listos
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('contenidoPagina').style.display = 'block';
+      }, 1000); // 1 segundo simulado de carga
+    });
+  </script>
+</body>
+</html>

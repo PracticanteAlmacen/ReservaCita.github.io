@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Usuario - Sistema de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    /* Loader Styles */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #8B0000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contenido oculto al inicio -->
+  <div id="contenidoPagina" style="display:none;">
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <div class="encabezado-contenido">
+        <div class="encabezado-izquierdo">
+          <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+          <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+        </div>
+        <div class="encabezado-derecho">
+          <button onclick="window.location.href='./usuario.html'">INICIO</button>
+          <button onclick="window.location.href='./citas.html'">MIS CITAS</button>
+          <button onclick="window.location.href='./historial.html'">MI HISTORIAL</button>
+          <button onclick="window.location.href='./cuenta.html'">MI CUENTA</button>
+          <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CUERPO -->
+    <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg');">
+      <div class="contenido-central bienvenida-contenedor" style="display: flex; flex-direction: column; align-items: center;">
+        <!-- Contenedor para los textos, alineados verticalmente -->
+          <p class="frase-bienvenida">"CONSTRUYENDO CONFIANZA DESDE 1994"</p>
+          <!-- Contenedor para los textos de bienvenida y razón social -->
+          <div class="bienvenida-mensaje" style="display: flex; gap: 8px; font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 30px;">
+            <h2 id="mensajeBienvenida" style="margin: 0;"></h2>
+            <h2 id="razonSocial" style="margin: 0;"></h2>
+          </div>
+        <button class="btn-reservar" style="font-weight: bold; padding: 12px 24px; cursor: pointer;" onclick="window.location.href='./reservar.html'">RESERVAR CITA</button>
+      </div>
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+      <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+    </footer>
+
+    <!-- WhatsApp Fijo -->
+    <div class="whatsapp-logo-fixed">
+      <a href="https://wa.me/51998172864" target="_blank">
+        <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+      </a>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module" src="../js/usuario.js"></script>
+  <script>
+    // Al cargar la página, escucha evento que indica que la app cargó datos (ajusta en usuario.js)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('contenidoPagina').style.display = 'block';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

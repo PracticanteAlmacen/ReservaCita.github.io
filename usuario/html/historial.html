@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Historial de Citas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../style.css" />
+  <style>
+    /* Loader Styles */
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #8B0000;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader visible al cargar -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Contenido oculto al inicio -->
+  <div id="contenidoPagina" style="display:none;">
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+      <div class="encabezado-contenido">
+        <div class="encabezado-izquierdo">
+          <img src="../../imagenes/imagen2.jpg" alt="Logo SIKA" class="logo-sika" />
+          <h1 class="titulo-sistema">SISTEMA DE RESERVAS DE CITAS</h1>
+        </div>
+        <div class="encabezado-derecho">
+          <button onclick="window.location.href='./usuario.html'">INICIO</button>
+          <button onclick="window.location.href='./citas.html'">MIS CITAS</button>
+          <button onclick="window.location.href='./historial.html'">MI HISTORIAL</button>
+          <button onclick="window.location.href='./cuenta.html'">MI CUENTA</button>
+          <button onclick="window.location.href='../../login/login.html'">SALIR</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CUERPO -->
+    <main class="dashboard-cuerpo" style="background-image: url('../../imagenes/imagen1.jpg'); background-size: cover; min-height: 100vh;">
+      <div class="calendario-container" style="position: relative; background-color: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 1200px; margin: auto;">
+        <button id="btnCerrarHistorial" class="btn-cerrar-simple">✖</button>
+
+        <!-- TABLA -->
+        <div style="max-width: 100%; max-height: 600px; overflow-x: auto; overflow-y: auto; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px;">
+          <table class="tabla-profesional" style="min-width: 1000px; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <td colspan="10" style="text-align: center; font-weight: bold; font-size: 1.5rem; color: #8B0000; padding: 15px 0;">
+                  HISTORIAL DE CITAS
+                </td>
+              </tr>
+              <tr>
+                <th>N° RESERVA</th>
+                <th>FECHA</th>
+                <th>HORA</th>
+                <th>CLIENTE</th>
+                <th>NOMBRE TRANSPORTISTA</th>
+                <th>DNI TRANSPORTISTA</th>
+                <th>CELULAR</th>
+                <th>PLACA</th>
+                <th>OPERADOR</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody id="tablaHistorial">
+              <!-- Filas generadas dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+
+
+
+    <!-- WhatsApp Fijo -->
+    <div class="whatsapp-logo-fixed">
+      <a href="https://wa.me/51998172864" target="_blank">
+        <img src="../../imagenes/imagen4.jpg" alt="WhatsApp Soporte" />
+      </a>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+      <p>¿Necesitas ayuda? Contáctanos por soporte técnico.</p>
+    </footer>
+  </div>
+
+  <script type="module" src="../js/historial.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      // Espera un poco para simular carga y esconder loader
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('contenidoPagina').style.display = 'block';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
